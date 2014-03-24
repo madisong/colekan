@@ -17,12 +17,14 @@ pygame.init()
 pygame.display.set_caption("Get to the red square!")   #Sets up display/screen
 TDGlobals.screen = pygame.display.set_mode((500, 400))
 clock = pygame.time.Clock()
-
-spiderImg = pygame.image.load("spider.png")
+h_x = 0
+h_y = 0
 stonefloorImg = pygame.image.load("stonefloor.png")
 wallImg = pygame.image.load("wall.png")
 orcImg = pygame.image.load("orc.png")
 impImg = pygame.image.load("imp.png")
+spiderImg = pygame.image.load("spider.png")
+trollImg = pygame.image.load("troll.png")
 def drawWall():
 	for walls in RandomMap.isWall:
 		wall_x = walls[0] * 8
@@ -49,9 +51,15 @@ def drawMonsters():
 		if monster[2] == "imp":
 			monster = pygame.Rect(monster_x, monster_y, 8, 8)
 			TDGlobals.screen.blit(impImg, (monster_x,monster_y))                   
-        if monster[2] == "spider":
-            monster = pygame.Rect(monster_x, monster_y, 8, 8)
-            TDGlobals.screen.blit(spiderImg, (monster_x, monster_y))
+		if monster[2] == "spider":
+			monster = pygame.Rect(monster_x, monster_y, 8, 8)
+			TDGlobals.screen.blit(spiderImg, (monster_x,monster_y))
+		if monster[2] == "troll":
+			monster = pygame.Rect(monster_x, monster_y, 8, 8)
+			TDGlobals.screen.blit(trollImg, (monster_x,monster_y))
+			
+			
+
 player = Player(2, 2, "character.png")
 Monsters.remove0()
 Monsters.assignStats()
@@ -77,6 +85,11 @@ while player.playing: #main playing loop
 					viewingInv = True
 					
 			player.checkNextPos()
+			if viewingInv == True:
+				if  e.key == pygame.K_DOWN:
+					h_y += 20
+				if e.key == pygame.K_UP:
+					h_y -= 20
 			if viewingInv == False:	
 				player.Combat()
 				if player.moved == False:						
@@ -155,19 +168,40 @@ while player.playing: #main playing loop
 	
 	drawStatBox()	
 	
+	
 	TDGlobals.screen.blit(healthText, (405, 10))
 	TDGlobals.screen.blit(defenseText, (405, 25))
 	TDGlobals.screen.blit(experienceText, (405, 40))
-	
-	if viewingInv == True:
-		invRect = pygame.Surface((300,300))  
-		invRect.set_alpha(128)                
-		invRect.fill((128,128,128))           
-		TDGlobals.screen.blit(invRect, (50,50))    
-	
-	
-	
 	drawFloor()
+	player.render()
+	drawMonsters()
+	drawWall()
+	
+
+	
+	
+	
+	
+	
+	
+	if viewingInv == True:  
+		x = 0
+		y = 0
+
+		highlight = pygame.Surface((110, 15))
+		highlight.set_alpha(8)
+		highlight.fill((255,255,0))
+		
+		for item in player.inv:
+			displayitem = myfont.render(item , 1, (0,0,0))
+			backText = pygame.Rect(x, y, 110, 15)
+			pygame.draw.rect(TDGlobals.screen, (0,0,255), backText)
+			TDGlobals.screen.blit(highlight, (h_x, h_y))
+			TDGlobals.screen.blit(displayitem, (x, y))
+			y += 20
+
+
+					
 	
 	if RandomMap.isTele == True:
 		pygame.draw.rect(TDGlobals.screen, (255, 255, 0), RandomMap.tele1)
@@ -176,8 +210,6 @@ while player.playing: #main playing loop
 	if RandomMap.isEnd == True:
 		pygame.draw.rect(TDGlobals.screen, (255, 0, 0), RandomMap.end_rect)
 	
-	player.render()
-	drawMonsters()
-	drawWall()
+
 	
 	pygame.display.flip()

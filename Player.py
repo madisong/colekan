@@ -29,8 +29,10 @@ class Player(object):
 	#PLAYER INVENTORY/ HEALTH/ ETC#
 		self.hp  = 45
 		self.exp = 1
-		self.inv = []
-		self.defense = 100
+		self.inv = ["dagger", "leather garb", "item!", "item!", "item!", "item!", "item!", "item!", "item!", "item!", ]
+		self.equipped = {"hands": "dagger", "chest":"leather garb", "ring1": "none", "ring2": "none"}
+		self.defense = 1
+		self.power = 8
 	
 	def updatePos(self):
 		self.gridpos_x = int(self.rect.x / 8)
@@ -105,13 +107,20 @@ class Player(object):
 						y = stat[1]
 						self.damageCalc(x, y)
 	
+	def calcPlayerDamage(self, defense):
+		self.baseDamage = self.exp * 1.5 + self.power
+		self.playerDamage = self.baseDamage / 1 - defense / 1.3
+
 	
 	def damageCalc(self, x, y):
 		for stat in RandomMap.isMonster:
 			if stat[0] == x and stat[1] == y:
-				playerDamage = random.randint(8, 12) / 1 - (stat[4] / 1.3)
-				stat[3] -= int(playerDamage)
-				print "You deal " + str(int(playerDamage)) + " damage to the " + str(stat[2])
+				self.calcPlayerDamage(stat[4])
+				if self.playerDamage <= 0:
+					print "You can't penetrate the " + str(stat[2]) + "'s armor!"
+				elif self.playerDamage >= 0:
+					stat[3] -= int(self.playerDamage)
+					print "You deal " + str(int(self.playerDamage)) + " damage to the " + str(stat[2])
 				
 				if stat[3] >= 0:
 					if stat[2] == "orc":
@@ -155,12 +164,14 @@ class Player(object):
 							self.hp -= int(spiderDamage)
 							print "The spider did " + str(int(spiderDamage)) + " damage"				
 				
-				
-				
-				
-				
 				if stat[3] <= 0:
 					RandomMap.isMonster.remove(stat)
-					
+					self.exp += 1
+
+
+
+
+
+		
 	def render(self):
 		TDGlobals.screen.blit(self.character, (self.gridpos_x * 8, self.gridpos_y * 8))
