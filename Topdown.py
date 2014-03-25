@@ -19,6 +19,7 @@ TDGlobals.screen = pygame.display.set_mode((500, 400))
 clock = pygame.time.Clock()
 h_x = 0
 h_y = 0
+drewinv = False
 stonefloorImg = pygame.image.load("stonefloor.png")
 wallImg = pygame.image.load("wall.png")
 orcImg = pygame.image.load("orc.png")
@@ -85,21 +86,24 @@ while player.playing: #main playing loop
 					viewingInv = True
 					
 			player.checkNextPos()
+			
 			if viewingInv == True:
 				if  e.key == pygame.K_DOWN:
 					h_y += 20
 				if e.key == pygame.K_UP:
 					h_y -= 20
+			
 			if viewingInv == False:	
 				player.Combat()
 				if player.moved == False:						
 					if player.checkedPos == True:
-						if e.key == pygame.K_LEFT: 				#if keydown left
-							if player.beingBlockedLeft == False:						#Is there a wall/block to the players left?
-								player.updatePos()												# get new position of player
-								player.checkedPos = False									# Checked position! 
-								player.movingL = True										# Sets a flag so the player cannot hold an arrow key down to move. False when Keyup
-								player.moved = True											# Player moved, Used so he can't hold down a key
+						Monsters.moveMonster()
+						if e.key == pygame.K_LEFT: 				
+							if player.beingBlockedLeft == False:						
+								player.updatePos()												
+								player.checkedPos = False									
+								player.movingL = True										
+								player.moved = True											
 								player.rect.x -= 8
 						if  e.key == pygame.K_RIGHT:
 							if player.beingBlockedRight == False:		
@@ -134,7 +138,8 @@ while player.playing: #main playing loop
 			if  e.key == pygame.K_DOWN:
 				player.movingD = False
 			if player.moved == True:	
-				if not player.movingL and not player.movingR and not player.movingU and not player.movingD:	
+				if not player.movingL and not player.movingR and not player.movingU \
+				and not player.movingD:	
 					player.moved = False
 	
 	if RandomMap.isTele == True:
@@ -191,14 +196,15 @@ while player.playing: #main playing loop
 		highlight = pygame.Surface((110, 15))
 		highlight.set_alpha(8)
 		highlight.fill((255,255,0))
-		
-		for item in player.inv:
-			displayitem = myfont.render(item , 1, (0,0,0))
-			backText = pygame.Rect(x, y, 110, 15)
-			pygame.draw.rect(TDGlobals.screen, (0,0,255), backText)
-			TDGlobals.screen.blit(highlight, (h_x, h_y))
-			TDGlobals.screen.blit(displayitem, (x, y))
-			y += 20
+		if drewinv == False:
+			drewinv == True
+			for item in player.inv:
+				displayitem = myfont.render(item , 1, (0,0,0))
+				backText = pygame.Rect(x, y, 110, 15)
+				pygame.draw.rect(TDGlobals.screen, (0,0,255), backText)
+				TDGlobals.screen.blit(highlight, (h_x, h_y))
+				TDGlobals.screen.blit(displayitem, (x, y))
+				y += 20
 
 
 					
