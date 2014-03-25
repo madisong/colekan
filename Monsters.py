@@ -57,6 +57,9 @@ class Monsters():
 						monsterR = True
 					if monster[0] - 1 == pos[0] and monster[1] == pos[1]:
 						monsterL = True
-				
+				        if monster[1] + 1 == pos[1] and monster[0] == pos[0]:
+                                                monsterD = False
+                                        if monster[1] - 1 == pos[1] and monster[0] == pos[0]:
+                                                monsterU = False
 				monster[0] += 1
 				monster[1] += 1
