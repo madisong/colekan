@@ -71,6 +71,16 @@ class Monsters():
 			
 		def moveMonster(self):
 			for monster in RandomMap.isMonster:
-				if (monster[0] + 1) - player.gridpos_x < (monster[0] - 1) - player.gridpos_x:
+				moveRight = (monster[0] + 1) - player.gridpos_x
+				moveLeft = (monster[0] - 1) - player.gridpos_x
+				moveUp = (monster[1] - 1) - player.gridpos_y
+				moveDown = (monster[1] + 1) - player.gridpos_y
+				if moveRight < moveLeft and moveRight < moveUp and moveRight < moveDown:
 					monster[0] += 1
+				elif moveLeft < moveRight and moveLeft < moveUp and moveLeft < moveDown:
+					monster[0] -= 1
+				elif moveUp < moveRight and moveUp < moveLeft and moveUp < moveDown:
+					monster[1] -= 1
+				elif moveDown < moveUp and moveDown < moveRight and moveDown < moveLeft:
+					monster[1] += 1
 					
