@@ -167,11 +167,6 @@ class Player(object):
 				if stat[3] <= 0:
 					RandomMap.isMonster.remove(stat)
 					self.exp += 1
-
-
-
-
-
-		
 	def render(self):
 		TDGlobals.screen.blit(self.character, (self.gridpos_x * 8, self.gridpos_y * 8))
+player = Player(2, 2, "character.png")

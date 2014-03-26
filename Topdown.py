@@ -2,19 +2,19 @@ import os
 import random
 import pygame
 import sys
-from Monsters import *
 from RandMap import *
 from Player import *
+from Monsters import *
 from TDGlobals import *
 
-Monsters = Monsters()
+
 viewingInv = False
 RandomMap.makeMap(RandomMap.level1)
 RandomMap.map_update(0,0,RandomMap.level1)
 print "Initializing window..." 
 os.environ["SDL_VIDEO_CENTERED"] = "1"
 pygame.init()
-pygame.display.set_caption("Get to the red square!")   #Sets up display/screen
+pygame.display.set_caption("Destroy all monsters!")   #Sets up display/screen
 TDGlobals.screen = pygame.display.set_mode((500, 400))
 clock = pygame.time.Clock()
 h_x = 0
@@ -61,7 +61,8 @@ def drawMonsters():
 			
 			
 
-player = Player(2, 2, "character.png")
+
+Monsters = Monsters()
 Monsters.remove0()
 Monsters.assignStats()
 
@@ -97,7 +98,6 @@ while player.playing: #main playing loop
 				player.Combat()
 				if player.moved == False:						
 					if player.checkedPos == True:
-						Monsters.moveMonster()
 						if e.key == pygame.K_LEFT: 				
 							if player.beingBlockedLeft == False:						
 								player.updatePos()												
@@ -126,8 +126,9 @@ while player.playing: #main playing loop
 								player.movingU = True
 								player.moved = True
 								player.rect.y -= 8
-		player.updatePos()
-		
+			player.updatePos()
+			Monsters.checkMonsterPos()
+			Monsters.moveMonster()
 		if e.type == pygame.KEYUP:
 			if  e.key == pygame.K_LEFT:
 				player.movingL = False

@@ -15,7 +15,10 @@ class Monsters():
 			self.spiderDef = 5
 			self.ratHP = 3
 			self.ratDef = 1
-				
+			self.monsterR = False
+			self.monsterL = False
+			self.monsterU = False
+			self.monsterD = False	
 		def assignStats(self):
 			print "Monsters getting buff!"
 			
@@ -50,19 +53,24 @@ class Monsters():
                             if RandomMap.isMonster[0] == [0, 0, 0]:
                                 del RandomMap.isMonster[0]
                                 
-		def moveMonster(self):
-			monsterR = False
-			monsterL = False
-			monsterU = False
-			monserD = False
+		def checkMonsterPos(self):
+			self.monsterR = False
+			self.monsterL = False
+			self.monsterU = False
+			self.monsterD = False
 			for monster in RandomMap.isMonster:
 				for pos in RandomMap.isWall:
 					if monster[0] + 1 == pos[0] and monster[1] == pos[1]:
-						monsterR = True
+						self.monsterR = True
 					if monster[0] - 1 == pos[0] and monster[1] == pos[1]:
-						monsterL = True
-				   	if monster[1] + 1 == pos[1] and monster[0] == pos[0]:
-                	    monsterD = False
-            		if monster[1] - 1 == pos[1] and monster[0] == pos[0]:
-                        monsterU = False
+						self.monsterL = True
+					if monster[1] + 1 == pos[1] and monster[0] == pos[0]:
+						self.monsterD = False
+					if monster[1] - 1 == pos[1] and monster[0] == pos[0]:
+						selfmonsterU = False
+			
+		def moveMonster(self):
+			for monster in RandomMap.isMonster:
+				if (monster[0] + 1) - player.gridpos_x < (monster[0] - 1) - player.gridpos_x:
+					monster[0] += 1
 					
