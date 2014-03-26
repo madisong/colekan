@@ -71,16 +71,32 @@ class Monsters():
 			
 		def moveMonster(self):
 			for monster in RandomMap.isMonster:
+				self.blocked = False
 				moveRight = (monster[0] + 1) - player.gridpos_x
 				moveLeft = (monster[0] - 1) - player.gridpos_x
 				moveUp = (monster[1] - 1) - player.gridpos_y
 				moveDown = (monster[1] + 1) - player.gridpos_y
-				if moveRight < moveLeft and moveRight < moveUp and moveRight < moveDown:
-					monster[0] += 1
-				elif moveLeft < moveRight and moveLeft < moveUp and moveLeft < moveDown:
-					monster[0] -= 1
-				elif moveUp < moveRight and moveUp < moveLeft and moveUp < moveDown:
-					monster[1] -= 1
-				elif moveDown < moveUp and moveDown < moveRight and moveDown < moveLeft:
-					monster[1] += 1
+				for wall in RandomMap.isWall:
+					if monster[0] + 1 == wall[0] and monster[1] == wall[1]:
+						self.blockedRight = True
+						self.blocked = True
+					if monster[0] - 1 == wall[0] and monster[1] == wall[1]:
+						self.blockedLeft = True
+						self.blocked = True
+					if monster[1] + 1 == wall[1] and monster[0] == wall[0]:
+						self.blockedDown = True
+						self.blocked = True
+					if monster[1] - 1 == wall[1] and monster[0] == wall[0]:
+						self.blockedUp = True
+						self.blocked = True
+				
+				if self.blocked == False:
+					if moveRight < moveLeft and moveRight < moveUp and moveRight < moveDown:
+						monster[0] += 1
+					if moveLeft < moveRight and moveLeft < moveUp and moveLeft < moveDown:
+						monster[0] -= 1
+					if moveUp < moveRight and moveUp < moveLeft and moveUp < moveDown:
+						monster[1] -= 1
+					if moveDown < moveUp and moveDown < moveRight and moveDown < moveLeft:
+						monster[1] += 1
 					
