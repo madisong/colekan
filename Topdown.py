@@ -26,6 +26,7 @@ orcImg = pygame.image.load("orc.png")
 impImg = pygame.image.load("imp.png")
 spiderImg = pygame.image.load("spider.png")
 trollImg = pygame.image.load("troll.png")
+ratImg = pygame.image.load("rat.png")
 def drawWall():
 	for walls in RandomMap.isWall:
 		wall_x = walls[0] * 8
@@ -58,7 +59,9 @@ def drawMonsters():
 		if monster[2] == "troll":
 			monster = pygame.Rect(monster_x, monster_y, 8, 8)
 			TDGlobals.screen.blit(trollImg, (monster_x,monster_y))
-			
+		if monster[2] == "rat":
+			monster = pygame.Rect(monster_x, monster_y, 8, 8)
+			TDGlobals.screen.blit(ratImg, (monster_x,monster_y))	
 			
 
 
