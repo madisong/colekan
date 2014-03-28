@@ -129,9 +129,10 @@ while player.playing: #main playing loop
 								player.movingU = True
 								player.moved = True
 								player.rect.y -= 8
-			player.updatePos()
-			Monsters.checkMonsterPos()
-			Monsters.moveMonster()
+						if player.moved == True:
+							player.updatePos()
+							Monsters.checkMonsterPos()
+							Monsters.moveMonster()
 		if e.type == pygame.KEYUP:
 			if  e.key == pygame.K_LEFT:
 				player.movingL = False

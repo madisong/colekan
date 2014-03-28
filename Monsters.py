@@ -18,7 +18,8 @@ class Monsters():
 			self.monsterR = False
 			self.monsterL = False
 			self.monsterU = False
-			self.monsterD = False	
+			self.monsterD = False
+
 		def assignStats(self):
 			print "Monsters getting buff!"
 			
@@ -71,25 +72,47 @@ class Monsters():
 					
 		def moveMonster(self):
 			for monster in RandomMap.isMonster:
-				self.blocked = False
-
-				for wall in RandomMap.isWall:
-					if monster[0] + 1 == wall[0] or monster[0] + 1 == player.gridpos_x and monster[1] == wall[1] or monster[1] == player.gridpos_y:
-						self.blocked = True
-					if monster[0] - 1 == wall[0] or monster[0] - 1 == player.gridpos_x and monster[1] == wall[1] or monster[1] == player.gridpos_y:
-						self.blocked = True
-					if monster[1] + 1 == wall[1] or monster[1] + 1 == player.gridpos_y and monster[0] == wall[0] or monster[0] == player.gridpos_x:
-						self.blocked = True
-					if monster[1] - 1 == wall[1] or monster[1] - 1 == player.gridpos_y and monster[0] == wall[0] or monster[0] == player.gridpos_x:
-						self.blocked = True		
+				self.blockedUp = False
+				self.blockedLeft = False
+				self.blockedRight = False
+				self.blockedDown = False
+				self.moved = False
+				if monster[0] + 1 == player.gridpos_x and monster[1] == player.gridpos_y:
+					self.blockedRight = True
+				if monster[0] - 1 == player.gridpos_x and monster[1] == player.gridpos_y:
+					self.blockedLeft = True
+				if monster[1] + 1 == player.gridpos_y and monster[0] == player.gridpos_x:
+					self.blockedDown = True
+				if monster[1] - 1 == player.gridpos_y and monster[0] == player.gridpos_x:
+					self.blockedUp = True
 				
-				if self.blocked == False:
+				for wall in RandomMap.isWall:
+					if monster[0] + 1 == wall[0]  and monster[1] == wall[1]:
+						self.blockedRight = True
+					if monster[0] - 1 == wall[0]  and monster[1] == wall[1]:
+						self.blockedLeft = True
+					if monster[1] + 1 == wall[1] and monster[0] == wall[0]:
+						self.blockedDown = True
+					if monster[1] - 1 == wall[1] and monster[0] == wall[0]:
+						self.blockedUp = True		
+				
+
+				if self.blockedLeft == False:
 					if monster[0] > player.gridpos_x:
 						monster[0] -= 1
+						self.moved = True
+				if self.blockedRight == False:	
 					if monster[0] < player.gridpos_x:
-						monster[0] += 1
-					if monster[1] > player.gridpos_y:
-						monster[1] -= 1
-					if monster[1] < player.gridpos_y:
-						monster[1] += 1
+						monster[0] += 1				
+						self.moved = True
+				
+				if self.moved == False:
+					if self.blockedUp == False:	
+						if monster[1] > player.gridpos_y:
+							monster[1] -= 1
+					if self.blockedDown == False:	
+						if monster[1] < player.gridpos_y:
+							monster[1] += 1
+							
+
 					
