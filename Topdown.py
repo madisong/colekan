@@ -6,8 +6,30 @@ from RandMap import *
 from Player import *
 from Monsters import *
 from TDGlobals import *
-
-
+""" 
+TODO:
+	
+	Inventory overlay:
+		equipping items
+		highlighting
+	
+	Player:
+		know whats equipped and what it does
+	
+	StatEditor:
+		change players stats
+		be able to input numbers
+		open text input window
+	
+	monster AI:
+		fix x before y
+	
+	Level Gen:
+		add randomization
+		add more levels (empty lists)
+		better change level with editing strings
+	
+"""
 viewingInv = False
 RandomMap.makeMap(RandomMap.level1)
 RandomMap.map_update(0,0,RandomMap.level1)

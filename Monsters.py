@@ -54,21 +54,6 @@ class Monsters():
                             if RandomMap.isMonster[0] == [0, 0, 0]:
                                 del RandomMap.isMonster[0]
                                 
-		def checkMonsterPos(self):
-			self.monsterR = False
-			self.monsterL = False
-			self.monsterU = False
-			self.monsterD = False
-			for monster in RandomMap.isMonster:
-				for pos in RandomMap.isWall:
-					if monster[0] + 1 == pos[0] and monster[1] == pos[1]:
-						self.monsterR = True
-					if monster[0] - 1 == pos[0] and monster[1] == pos[1]:
-						self.monsterL = True
-					if monster[1] + 1 == pos[1] and monster[0] == pos[0]:
-						self.monsterD = False
-					if monster[1] - 1 == pos[1] and monster[0] == pos[0]:
-						selfmonsterU = False
 					
 		def moveMonster(self):
 			for monster in RandomMap.isMonster:
@@ -76,7 +61,7 @@ class Monsters():
 				self.blockedLeft = False
 				self.blockedRight = False
 				self.blockedDown = False
-				self.moved = False
+				self.movedX = False
 				if monster[0] + 1 == player.gridpos_x and monster[1] == player.gridpos_y:
 					self.blockedRight = True
 				if monster[0] - 1 == player.gridpos_x and monster[1] == player.gridpos_y:
@@ -100,13 +85,13 @@ class Monsters():
 				if self.blockedLeft == False:
 					if monster[0] > player.gridpos_x:
 						monster[0] -= 1
-						self.moved = True
+						self.movedX = True
 				if self.blockedRight == False:	
 					if monster[0] < player.gridpos_x:
 						monster[0] += 1				
-						self.moved = True
+						self.movedX = True
 				
-				if self.moved == False:
+				if self.movedX == False:
 					if self.blockedUp == False:	
 						if monster[1] > player.gridpos_y:
 							monster[1] -= 1
