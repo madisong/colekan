@@ -42,13 +42,13 @@ clock = pygame.time.Clock()
 h_x = 0
 h_y = 0
 drewinv = False
-stonefloorImg = pygame.image.load("stonefloor.png")
-wallImg = pygame.image.load("wall.png")
-orcImg = pygame.image.load("orc.png")
-impImg = pygame.image.load("imp.png")
-spiderImg = pygame.image.load("spider.png")
-trollImg = pygame.image.load("troll.png")
-ratImg = pygame.image.load("rat.png")
+stonefloorImg = pygame.image.load(os.path.join('Images', 'stonefloor.png'))
+wallImg = pygame.image.load(os.path.join('Images', 'wall.png'))
+orcImg = pygame.image.load(os.path.join('Images', 'orc.png'))
+impImg = pygame.image.load(os.path.join('Images', 'imp.png'))
+spiderImg = pygame.image.load(os.path.join('Images', 'spider.png'))
+trollImg = pygame.image.load(os.path.join('Images', 'troll.png'))
+ratImg = pygame.image.load(os.path.join('Images', 'rat.png'))
 def drawWall():
 	for walls in RandomMap.isWall:
 		wall_x = walls[0] * 8
@@ -153,7 +153,6 @@ while player.playing: #main playing loop
 								player.rect.y -= 8
 						if player.moved == True:
 							player.updatePos()
-							Monsters.checkMonsterPos()
 							Monsters.moveMonster()
 		if e.type == pygame.KEYUP:
 			if  e.key == pygame.K_LEFT:

@@ -1,12 +1,13 @@
 from __future__ import division 
 import pygame
+import os
 from RandMap import *
 from TDGlobals import *
 
 class Player(object):
 	def __init__(self, x, y, image):
 	# MOVEMENT AND PLAYER LOCATION#
-		self.character = pygame.image.load(image)
+		self.character = pygame.image.load(os.path.join('Images', image))
 		self.rect = self.character.get_rect()
 		self.rect.x = x * 8
 		self.rect.y = y * 8
