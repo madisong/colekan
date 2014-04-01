@@ -10,7 +10,12 @@ class RandomMap():
 		self.level1 = []
 		self.level2 = []
 		self.level3 = []
-		self.level4 = []
+		self.level5 = []
+		self.level6 = []
+		self.level7 = []
+		self.level8 = []
+		self.level9 = []
+		self.level10 = []
 		self.charsLeft = 2500
 		self.topWall = True
 		self.sideWalls = 48

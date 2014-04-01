@@ -16,17 +16,13 @@ TODO:
 	Player:
 		know whats equipped and what it does
 	
-	StatEditor:
-		change players stats
-		be able to input numbers
-		open text input window
+	
 	
 	monster AI:
-		fix x before y
+		as good as it can get while no walls
 	
 	Level Gen:
 		add randomization
-		add more levels (empty lists)
 		better change level with editing strings
 	
 """
@@ -154,6 +150,11 @@ while player.playing: #main playing loop
 						if player.moved == True:
 							player.updatePos()
 							Monsters.moveMonster()
+						if e.key == pygame.K_p:
+							player.hp += 10
+						if e.key == pygame.K_o:
+							player.defense += 10		
+		
 		if e.type == pygame.KEYUP:
 			if  e.key == pygame.K_LEFT:
 				player.movingL = False
@@ -188,8 +189,22 @@ while player.playing: #main playing loop
 			if RandomMap.onLevel == 5:
 				RandomMap.makeMap(RandomMap.level5)
 				RandomMap.map_update(0, 0, RandomMap.level5)
-			Monsters.assignStats()
-	
+			if RandomMap.onLevel == 6:
+				RandomMap.makeMap(RandomMap.level6)
+				RandomMap.map_update(0, 0, RandomMap.level6)
+			if RandomMap.onLevel == 7:
+				RandomMap.makeMap(RandomMap.level7)
+				RandomMap.map_update(0, 0, RandomMap.level7)
+			if RandomMap.onLevel == 8:
+				RandomMap.makeMap(RandomMap.level8)
+				RandomMap.map_update(0, 0, RandomMap.level8)
+			if RandomMap.onLevel == 9:
+				RandomMap.makeMap(RandomMap.level9)
+				RandomMap.map_update(0, 0, RandomMap.level9)
+			if RandomMap.onLevel == 10:
+				RandomMap.makeMap(RandomMap.level10)
+				RandomMap.map_update(0, 0, RandomMap.level10)
+
 	playScreen = pygame.Rect(0, 0, 400, 400)
 	pygame.draw.rect(TDGlobals.screen, (50,50,50), playScreen)
 	myfont = pygame.font.SysFont("monospace", 15)
@@ -220,17 +235,18 @@ while player.playing: #main playing loop
 		y = 0
 
 		highlight = pygame.Surface((110, 15))
-		highlight.set_alpha(8)
+		highlight.set_alpha(100)
 		highlight.fill((255,255,0))
 		if drewinv == False:
-			drewinv == True
+			drewinv = True
 			for item in player.inv:
 				displayitem = myfont.render(item , 1, (0,0,0))
 				backText = pygame.Rect(x, y, 110, 15)
-				pygame.draw.rect(TDGlobals.screen, (0,0,255), backText)
-				TDGlobals.screen.blit(highlight, (h_x, h_y))
-				TDGlobals.screen.blit(displayitem, (x, y))
 				y += 20
+		pygame.draw.rect(TDGlobals.screen, (0,0,255), backText)
+		TDGlobals.screen.blit(highlight, (h_x, h_y))
+		TDGlobals.screen.blit(displayitem, (x, y))
+				
 
 
 					

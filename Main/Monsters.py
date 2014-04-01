@@ -86,13 +86,14 @@ class Monsters():
 					if monster[0] > player.gridpos_x:
 						monster[0] -= 1
 						movedX = True
-						if monster[0] == player.gridpos_x:
+						
+							
 				if self.blockedRight == False:	
 					if monster[0] < player.gridpos_x:
 						monster[0] += 1				
 						movedX = True
-					if monster[0] == player.gridpos_x:
-						
+
+
 				
 				if movedX == False:
 					if self.blockedUp == False:	
@@ -101,6 +102,5 @@ class Monsters():
 					if self.blockedDown == False:	
 						if monster[1] < player.gridpos_y:
 							monster[1] += 1
-							
 
 					
