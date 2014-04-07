@@ -15,18 +15,17 @@ TODO:
 	
 	Player:
 		know whats equipped and what it does
-	
-	
-	
+
 	monster AI:
 		as good as it can get while no walls
 	
 	Level Gen:
 		add randomization
-		better change level with editing strings
 	
 """
 viewingInv = False
+rectsInInv = []
+textInInv = []
 RandomMap.makeMap(RandomMap.level1)
 RandomMap.map_update(0,0,RandomMap.level1)
 print "Initializing window..." 
@@ -235,18 +234,22 @@ while player.playing: #main playing loop
 		y = 0
 
 		highlight = pygame.Surface((110, 15))
-		highlight.set_alpha(100)
+		highlight.set_alpha(8)
 		highlight.fill((255,255,0))
 		if drewinv == False:
 			drewinv = True
 			for item in player.inv:
-				displayitem = myfont.render(item , 1, (0,0,0))
-				backText = pygame.Rect(x, y, 110, 15)
+				textInInv.append(myfont.render(item , 1, (0,0,0)))
+				rectsInInv.append(pygame.Rect(x, y, 110, 15))
 				y += 20
-		pygame.draw.rect(TDGlobals.screen, (0,0,255), backText)
-		TDGlobals.screen.blit(highlight, (h_x, h_y))
-		TDGlobals.screen.blit(displayitem, (x, y))
-				
+		
+		
+		
+		for rect in rectsInInv:
+			pygame.draw.rect(TDGlobals.screen, (0, 0, 100), rect)
+			TDGlobals.screen.blit(highlight, (h_x, h_y))
+			#TDGlobals.screen.blit(rect, (x, y))
+		#for text in textInIn:		
 
 
 					
