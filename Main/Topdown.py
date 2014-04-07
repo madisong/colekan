@@ -6,7 +6,9 @@ from RandMap import *
 from Player import *
 from Monsters import *
 from TDGlobals import *
+from PlayerInventory import *
 """ 
+
 TODO:
 	
 	Inventory overlay:
@@ -23,9 +25,7 @@ TODO:
 		add randomization
 	
 """
-viewingInv = False
-rectsInInv = []
-textInInv = []
+
 RandomMap.makeMap(RandomMap.level1)
 RandomMap.map_update(0,0,RandomMap.level1)
 print "Initializing window..." 
@@ -34,9 +34,8 @@ pygame.init()
 pygame.display.set_caption("Destroy all monsters!")   #Sets up display/screen
 TDGlobals.screen = pygame.display.set_mode((500, 400))
 clock = pygame.time.Clock()
-h_x = 0
-h_y = 0
-drewinv = False
+
+
 stonefloorImg = pygame.image.load(os.path.join('Images', 'stonefloor.png'))
 wallImg = pygame.image.load(os.path.join('Images', 'wall.png'))
 orcImg = pygame.image.load(os.path.join('Images', 'orc.png'))
@@ -44,6 +43,8 @@ impImg = pygame.image.load(os.path.join('Images', 'imp.png'))
 spiderImg = pygame.image.load(os.path.join('Images', 'spider.png'))
 trollImg = pygame.image.load(os.path.join('Images', 'troll.png'))
 ratImg = pygame.image.load(os.path.join('Images', 'rat.png'))
+
+
 def drawWall():
 	for walls in RandomMap.isWall:
 		wall_x = walls[0] * 8
@@ -81,6 +82,17 @@ def drawMonsters():
 			TDGlobals.screen.blit(ratImg, (monster_x,monster_y))	
 			
 
+inventory = PlayerInventory()
+
+
+		
+
+
+
+
+
+
+
 
 Monsters = Monsters()
 Monsters.remove0()
@@ -100,21 +112,17 @@ while player.playing: #main playing loop
 		if e.type == pygame.KEYDOWN:		# if keydown
 			
 			if e.key == pygame.K_i:
-				if viewingInv == True:
-					viewingInv = False
+				if inventory.viewingInv == True:
+					inventory.viewingInv = False
 				
-				elif viewingInv == False:
-					viewingInv = True
+				elif inventory.viewingInv == False:
+					inventory.viewingInv = True
 					
 			player.checkNextPos()
+			inventory.moveHighlight()
+
 			
-			if viewingInv == True:
-				if  e.key == pygame.K_DOWN:
-					h_y += 20
-				if e.key == pygame.K_UP:
-					h_y -= 20
-			
-			if viewingInv == False:	
+			if inventory.viewingInv == False:	
 				player.Combat()
 				if player.moved == False:						
 					if player.checkedPos == True:
@@ -221,39 +229,15 @@ while player.playing: #main playing loop
 	player.render()
 	drawMonsters()
 	drawWall()
+	inventory.makePlayerInv() # If drewinv = False, it will update the player inv. Set drewinv to false to re-draw
 	
-
-	
-	
-	
-	
-	
-	
-	if viewingInv == True:  
-		x = 0
-		y = 0
-
-		highlight = pygame.Surface((110, 15))
-		highlight.set_alpha(8)
-		highlight.fill((255,255,0))
-		if drewinv == False:
-			drewinv = True
-			for item in player.inv:
-				textInInv.append(myfont.render(item , 1, (0,0,0)))
-				rectsInInv.append(pygame.Rect(x, y, 110, 15))
-				y += 20
+		#for rect in rectsInInv:
+		#	pygame.draw.rect(TDGlobals.screen, (0, 0, 100), rect)
+		#	TDGlobals.screen.blit(highlight, (h_x, h_y))
+		#	TDGlobals.screen.blit(rect, (x, y))
+		#for text in textInInv:		
 		
 		
-		
-		for rect in rectsInInv:
-			pygame.draw.rect(TDGlobals.screen, (0, 0, 100), rect)
-			TDGlobals.screen.blit(highlight, (h_x, h_y))
-			#TDGlobals.screen.blit(rect, (x, y))
-		#for text in textInIn:		
-
-
-					
-	
 	if RandomMap.isTele == True:
 		pygame.draw.rect(TDGlobals.screen, (255, 255, 0), RandomMap.tele1)
 		pygame.draw.rect(TDGlobals.screen, (255, 255, 0), RandomMap.tele2)
