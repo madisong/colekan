@@ -3,10 +3,10 @@ import random
 import pygame
 import sys
 from RandMap import *
-from Player import *
+# from Player import *
 from Monsters import *
 from TDGlobals import *
-from PlayerInventory import *
+# from PlayerInventory import *
 """ 
 
 TODO:
@@ -25,6 +25,8 @@ TODO:
 		add randomization
 	
 """
+
+TDGlobals = TDGlobals()
 
 RandomMap.makeMap(RandomMap.level1)
 RandomMap.map_update(0,0,RandomMap.level1)
@@ -82,15 +84,7 @@ def drawMonsters():
 			TDGlobals.screen.blit(ratImg, (monster_x,monster_y))	
 			
 
-inventory = PlayerInventory()
-
-
-		
-
-
-
-
-
+#inventory = PlayerInventory()
 
 
 
@@ -98,18 +92,18 @@ Monsters = Monsters()
 Monsters.remove0()
 Monsters.assignStats()
 
-while player.playing: #main playing loop
+while TDGlobals.player.playing: #main playing loop
 	clock.tick(60)
-	if player.hp <= 0:
-		player.playing = False
+	if TDGlobals.player.hp <= 0:
+		TDGlobals.player.playing = False
 	
 	key = pygame.key.get_pressed()
 	for e in pygame.event.get(): 
 		if e.type == pygame.QUIT:
-			player.playing = False
+			TDGlobals.player.playing = False
 		if e.type == pygame.KEYDOWN and e.key == pygame.K_ESCAPE:
-			player.playing = False	
-		if e.type == pygame.KEYDOWN:		# if keydown
+			TDGlobals.player.playing = False	
+		if e.type == pygame.KEYDOWN:		
 			
 			if e.key == pygame.K_i:
 				if inventory.viewingInv == True:
@@ -118,72 +112,73 @@ while player.playing: #main playing loop
 				elif inventory.viewingInv == False:
 					inventory.viewingInv = True
 					
-			player.checkNextPos()
-			inventory.moveHighlight()
+			TDGlobals.player.checkNextPos()
+			
+			#inventory.moveHighlight()
 
 			
 			if inventory.viewingInv == False:	
-				player.Combat()
-				if player.moved == False:						
-					if player.checkedPos == True:
+				TDGlobals.player.Combat()
+				if TDGlobals.player.moved == False:						
+					if TDGlobals.player.checkedPos == True:
 						if e.key == pygame.K_LEFT: 				
-							if player.beingBlockedLeft == False:						
-								player.updatePos()												
-								player.checkedPos = False									
-								player.movingL = True										
-								player.moved = True											
-								player.rect.x -= 8
+							if TDGlobals.player.beingBlockedLeft == False:						
+								TDGlobals.player.updatePos()												
+								TDGlobals.player.checkedPos = False									
+								TDGlobals.player.movingL = True										
+								TDGlobals.player.moved = True											
+								TDGlobals.player.rect.x -= 8
 						if  e.key == pygame.K_RIGHT:
-							if player.beingBlockedRight == False:		
-								player.updatePos()
-								player.movingR = True
-								player.moved = True	
-								player.rect.x += 8
-								player.checkedPos = False					
+							if TDGlobals.player.beingBlockedRight == False:		
+								TDGlobals.player.updatePos()
+								TDGlobals.player.movingR = True
+								TDGlobals.player.moved = True	
+								TDGlobals.player.rect.x += 8
+								TDGlobals.player.checkedPos = False					
 						if  e.key == pygame.K_DOWN:
-							if player.beingBlockedDown == False:
-								player.updatePos()
-								player.movingD = True
-								player.moved = True
-								player.rect.y += 8
-								player.checkedPos = False
+							if TDGlobals.player.beingBlockedDown == False:
+								TDGlobals.player.updatePos()
+								TDGlobals.player.movingD = True
+								TDGlobals.player.moved = True
+								TDGlobals.player.rect.y += 8
+								TDGlobals.player.checkedPos = False
 						if  e.key == pygame.K_UP:
-							if player.beingBlockedUp == False:					
-								player.updatePos()
-								player.checkedPos = False
-								player.movingU = True
-								player.moved = True
-								player.rect.y -= 8
-						if player.moved == True:
-							player.updatePos()
+							if TDGlobals.player.beingBlockedUp == False:					
+								TDGlobals.player.updatePos()
+								TDGlobals.player.checkedPos = False
+								TDGlobals.player.movingU = True
+								TDGlobals.player.moved = True
+								TDGlobals.player.rect.y -= 8
+						if TDGlobals.player.moved == True:
+							TDGlobals.player.updatePos()
 							Monsters.moveMonster()
 						if e.key == pygame.K_p:
-							player.hp += 10
+							TDGlobals.player.hp += 10
 						if e.key == pygame.K_o:
-							player.defense += 10		
+							TDGlobals.player.defense += 10		
 		
 		if e.type == pygame.KEYUP:
 			if  e.key == pygame.K_LEFT:
-				player.movingL = False
+				TDGlobals.player.movingL = False
 			if  e.key == pygame.K_RIGHT:
-				player.movingR = False
+				TDGlobals.player.movingR = False
 			if  e.key == pygame.K_UP:
-				player.movingU = False
+				TDGlobals.player.movingU = False
 			if  e.key == pygame.K_DOWN:
-				player.movingD = False
-			if player.moved == True:	
-				if not player.movingL and not player.movingR and not player.movingU \
-				and not player.movingD:	
-					player.moved = False
+				TDGlobals.player.movingD = False
+			if TDGlobals.player.moved == True:	
+				if not TDGlobals.player.movingL and not TDGlobals.player.movingR and not TDGlobals.player.movingU \
+				and not TDGlobals.player.movingD:	
+					TDGlobals.player.moved = False
 	
 	if RandomMap.isTele == True:
-		if player.rect.colliderect(RandomMap.tele1):
-			player.rect = pygame.Rect(RandomMap.tele2)
+		if TDGlobals.player.rect.colliderect(RandomMap.tele1):
+			TDGlobals.player.rect = pygame.Rect(RandomMap.tele2)
 	
 	if RandomMap.isEnd == True:
-		if player.rect.colliderect(RandomMap.end_rect):
+		if TDGlobals.player.rect.colliderect(RandomMap.end_rect):
 			RandomMap.onLevel += 1
-			player.rect = pygame.Rect(16, 16, 8,8)
+			TDGlobals.player.rect = pygame.Rect(16, 16, 8,8)
 			if RandomMap.onLevel == 2: 
 				RandomMap.makeMap(RandomMap.level2)
 				RandomMap.map_update(0, 0, RandomMap.level2)
@@ -215,9 +210,9 @@ while player.playing: #main playing loop
 	playScreen = pygame.Rect(0, 0, 400, 400)
 	pygame.draw.rect(TDGlobals.screen, (50,50,50), playScreen)
 	myfont = pygame.font.SysFont("monospace", 15)
-	healthText = myfont.render("Health:" + str(player.hp) , 1, (255,60,60))
-	defenseText = myfont.render("Defense:" + str(player.defense) , 1, (0,255,255))
-	experienceText = myfont.render("Level:" + str(player.exp), 1, (34,139,34))
+	healthText = myfont.render("Health:" + str(TDGlobals.player.hp) , 1, (255,60,60))
+	defenseText = myfont.render("Defense:" + str(TDGlobals.player.defense) , 1, (0,255,255))
+	experienceText = myfont.render("Level:" + str(TDGlobals.player.exp), 1, (34,139,34))
 	
 	drawStatBox()	
 	
@@ -226,7 +221,7 @@ while player.playing: #main playing loop
 	TDGlobals.screen.blit(defenseText, (405, 25))
 	TDGlobals.screen.blit(experienceText, (405, 40))
 	drawFloor()
-	player.render()
+	TDGlobals.player.render()
 	drawMonsters()
 	drawWall()
 	inventory.makePlayerInv() # If drewinv = False, it will update the player inv. Set drewinv to false to re-draw

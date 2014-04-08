@@ -30,7 +30,7 @@ class Player(object):
 	#PLAYER INVENTORY/ HEALTH/ ETC#
 		self.hp  = 45
 		self.exp = 1
-		self.inv = ["dagger", "leather garb", "item!", "item!", "item!", "item!", ]
+		self.inv = ["dagger", "leather garb", "item!", "item!", "item!", "item!"]
 		self.equipped = {"hands": "dagger", "chest":"leather garb", "ring1": "none", "ring2": "none"}
 		self.defense = 1
 		self.power = 8
@@ -170,4 +170,4 @@ class Player(object):
 					self.exp += 1
 	def render(self):
 		TDGlobals.screen.blit(self.character, (self.gridpos_x * 8, self.gridpos_y * 8))
-player = Player(2, 2, "character.png")
+
