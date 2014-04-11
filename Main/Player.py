@@ -2,7 +2,7 @@ from __future__ import division
 import pygame
 import os
 from RandMap import *
-from TDGlobals import *
+import TDGlobals as tdg
 
 class Player(object):
 	def __init__(self, x, y, image):
@@ -168,6 +168,9 @@ class Player(object):
 				if stat[3] <= 0:
 					RandomMap.isMonster.remove(stat)
 					self.exp += 1
+	#def render(self, screen)
+	#	drawingMethod(self.character, (pos), screen)
+	
 	def render(self):
-		TDGlobals.screen.blit(self.character, (self.gridpos_x * 8, self.gridpos_y * 8))
+		tdg.screen.blit(self.character, (self.gridpos_x * 8, self.gridpos_y * 8))
 

@@ -1,7 +1,6 @@
 import pygame
 import random
 
-from TDGlobals import *
 
 class RandomMap():
 	def __init__(self):

@@ -1,7 +1,12 @@
 import pygame
-from Player import *
-class TDGlobals():
+import Player
+
+#class TDGlobals():
 	
-	def __init__(self):
-		self.screen = None
-		self.player = Player(2, 2, "character.png")
+	#def __init__(self):
+		
+		#self.screen = None
+		#self.player = Player.Player(2, 2, "character.png")
+		
+player = None
+screen = None
